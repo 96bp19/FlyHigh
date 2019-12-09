@@ -22,6 +22,10 @@ public class LaunchPlayer : MonoBehaviour
     public GameObject ObjectToSpawnPrefab;
     public GameObject PickableItemPrefab;
 
+    List<GameObject> allpickableItems = new List<GameObject>();
+
+    public LaunchPlayer previousLauncher;
+
 
     
 
@@ -88,11 +92,17 @@ public class LaunchPlayer : MonoBehaviour
             Vector3 drawPoint = LaunchRigidBody.position + displacement;
             if (MyMath.RandomBool())
             {
-               GameObject obj = Instantiate(PickableItemPrefab, drawPoint, Quaternion.identity);
+               GameObject obj = Instantiate(PickableItemPrefab, drawPoint, Quaternion.LookRotation(previousDrawPoint- drawPoint));
+                allpickableItems.Add(obj);
               //  obj.GetComponentInChildren<Renderer>().material.color = itemColor;
 
             }
             previousDrawPoint = drawPoint;
+
+            if (i >resolution -2)
+            {
+                break;
+            }
             
         }
     }    
@@ -126,6 +136,15 @@ public class LaunchPlayer : MonoBehaviour
             LaunchRigidBody = other.GetComponent<Rigidbody>();
             Vector3 spawnedPos = generateRandomSpawnLocation();
             GameObject newSpawnPlace = Instantiate(ObjectToSpawnPrefab, spawnedPos,Quaternion.identity);
+            LaunchPlayer launcher = newSpawnPlace.GetComponent<LaunchPlayer>();
+            if (launcher)
+            {
+                launcher.previousLauncher = this;
+            }
+            if (previousLauncher)
+            {
+                previousLauncher.DestroyObjectAnditsItems();
+            }
             newSpawnPlace.name = "PlayerFallPlace";
             Debug.Log(spawnedPos);
          
@@ -135,13 +154,33 @@ public class LaunchPlayer : MonoBehaviour
             
             Launch(randomLocation);
             SpawnPickableItems(newSpawnPlace.transform.position);
-            Destroy(this.gameObject);
+          
+
+           
+        
 
         }
     }
 
+    // removes previous launcher and its spawned items
+    public void DestroyObjectAnditsItems()
+    {
+            foreach (var item in allpickableItems)
+            {
+                if (item != null)
+                {
+                    Destroy(item);
+                }
 
-    float Randomgenerationrange =100;
+            }
+
+        allpickableItems.Clear();
+        Destroy(this.gameObject);
+
+    }
+
+
+    public float Randomgenerationrange =100;
     float minHeightForSpawn= 0, maxHeightForSpawn=200;
     Vector3 generateRandomSpawnLocation()
     {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 899640047990296998}
   - component: {fileID: 899640047990296994}
   m_Layer: 0
-  m_Name: Target
+  m_Name: DummyLaunchPad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,11 +59,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LaunchRigidBody: {fileID: 0}
-  height: 15
+  height: 50
   gravity: -10
   debugPath: 0
   boxCollier: {fileID: 0}
   ObjectToSpawnPrefab: {fileID: 899640047990296999}
+  PickableItemPrefab: {fileID: 0}
+  previousLauncher: {fileID: 0}
+  Randomgenerationrange: 500
 --- !u!1 &7246585296103803964
 GameObject:
   m_ObjectHideFlags: 0

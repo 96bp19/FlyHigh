@@ -16,7 +16,7 @@ public class PickUpItems : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

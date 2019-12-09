@@ -31,12 +31,13 @@ public class InputHandler : MonoBehaviour
     {
         inputData.HorizontalInp = Input.GetAxis(HorizontalInput);
         inputData.VerticalInp = Input.GetAxis(VerticalInput);
+        inputData.Horizontal_raw = Input.GetAxisRaw(HorizontalInput);
+        inputData.Vertical_raw = Input.GetAxisRaw(VerticalInput);
     }
 
     public static void  GetInput(out InputData inputs)
     {
-        inputs.HorizontalInp = inputData.HorizontalInp;
-        inputs.VerticalInp = inputData.VerticalInp;
+       inputs = inputData;
     }
     
 
@@ -47,4 +48,6 @@ public struct InputData
 {
     public float HorizontalInp;
     public float VerticalInp;
+    public float Horizontal_raw;
+    public float Vertical_raw;
 }
