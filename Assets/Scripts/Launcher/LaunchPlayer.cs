@@ -17,7 +17,7 @@ public class LaunchPlayer : MonoBehaviour
 
     private Vector3 randomLocation;
     public GameObject ObjectToSpawnPrefab;
-    public GameObject PickableItemPrefab;
+    public GameObject[] PickableItemPrefab;
 
     List<GameObject> allpickableItems = new List<GameObject>();
 
@@ -86,21 +86,24 @@ public class LaunchPlayer : MonoBehaviour
         Gizmos.color = Color.green;
         for (int i = 1; i <= resolution; i++)
         {
-            float simulationTime = i / (float)resolution * launchData.timeToTarget;
-            Vector3 displacement = launchData.initialVelocity * simulationTime + Vector3.up * gravity * simulationTime * simulationTime / 2f;
-            Vector3 drawPoint = LaunchRigidBody.position + displacement;
-            if (MyMath.RandomBool())
+            if (i >4)
             {
-               GameObject obj = Instantiate(PickableItemPrefab, drawPoint, Quaternion.LookRotation(previousDrawPoint- drawPoint));
-                allpickableItems.Add(obj);
-              //  obj.GetComponentInChildren<Renderer>().material.color = itemColor;
+                float simulationTime = i / (float)resolution * launchData.timeToTarget;
+                Vector3 displacement = launchData.initialVelocity * simulationTime + Vector3.up * gravity * simulationTime * simulationTime / 2f;
+                Vector3 drawPoint = LaunchRigidBody.position + displacement;
+               
+                   GameObject obj = Instantiate(PickableItemPrefab[Random.Range(0,PickableItemPrefab.Length)], drawPoint, Quaternion.LookRotation(previousDrawPoint- drawPoint));
+                    allpickableItems.Add(obj);
+                
 
-            }
-            previousDrawPoint = drawPoint;
+                
+                previousDrawPoint = drawPoint;
 
-            if (i >resolution -2)
-            {
-                break;
+                if (i >resolution -2)
+                {
+                    break;
+                }
+
             }
             
         }

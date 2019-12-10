@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUpItems : MonoBehaviour
+public abstract class APickUpItems : MonoBehaviour
 {
-
-    public float rotateSpeed =5;
-    private void Update()
-    {
-        transform.Rotate(0, rotateSpeed *Time.deltaTime, 0);
-    }
-
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            gameObject.SetActive(false);
+            Item_Affectable affectable_object = other.GetComponent<Item_Affectable>();
+            if (affectable_object)
+            {
+                OnInteractedWithPlayer(affectable_object);
+
+            }
         }
     }
+
+    public abstract void OnInteractedWithPlayer(Item_Affectable interactedObj);
+
+
+   
 }

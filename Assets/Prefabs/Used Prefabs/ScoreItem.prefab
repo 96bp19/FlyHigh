@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6185524398939858103}
   - component: {fileID: 6185524398939858102}
   m_Layer: 0
-  m_Name: DummyPickableItems
+  m_Name: PickableItems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,10 +56,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6185524398939858101}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fa51c69b889bb74d8fd9b9512a5f33f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ae12a100b9685d4b87fe6b2874ea00d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 90
 --- !u!1 &6185524399271536143
 GameObject:
   m_ObjectHideFlags: 0
