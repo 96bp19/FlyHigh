@@ -711,7 +711,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635191135}
-  m_LocalRotation: {x: 0.22292137, y: -0.0000000030617362, z: 0.000000013388968, w: 0.97483647}
+  m_LocalRotation: {x: 0.22292137, y: -0.0000000030617362, z: 0.0000000133889735,
+    w: 0.97483647}
   m_LocalPosition: {x: 0, y: 17.6, z: -20.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -889,7 +890,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868173811}
-  m_LocalRotation: {x: 0.22292137, y: -0.0000000030617362, z: 0.000000013388968, w: 0.97483647}
+  m_LocalRotation: {x: 0.22292137, y: -0.0000000030617362, z: 0.0000000133889735,
+    w: 0.97483647}
   m_LocalPosition: {x: 0, y: 17.6, z: -20.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1043,12 +1045,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 899640047990296994, guid: 30393256eccab2947a897440e4164e74,
-        type: 3}
-      propertyPath: PickableItemPrefab
-      value: 
-      objectReference: {fileID: 6185524398939858101, guid: 932190bb543b4ba4b91b051670e7287c,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30393256eccab2947a897440e4164e74, type: 3}
 --- !u!1 &2009080966

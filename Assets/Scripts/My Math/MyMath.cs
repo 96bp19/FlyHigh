@@ -60,6 +60,11 @@ public static class MyMath
     public static Vector3 GetRandomPointInCollider(BoxCollider collider, bool useRandomY = false)
     {
         Vector3 point;
+        if (collider == null)
+        {
+            Debug.Log("no collider");
+            return Vector3.one *200;
+        }
         if (useRandomY)
         {
             point = new Vector3(

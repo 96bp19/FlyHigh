@@ -15,10 +15,7 @@ public class LaunchPlayer : MonoBehaviour
     public static bool itStoped = false;
     bool jumpckeck = true, colisionCheck = false;
 
-    Vector3 randomLocation;
-
-    public BoxCollider boxCollier;
-
+    private Vector3 randomLocation;
     public GameObject ObjectToSpawnPrefab;
     public GameObject PickableItemPrefab;
 
@@ -109,11 +106,6 @@ public class LaunchPlayer : MonoBehaviour
 
     void OnDrawGizmos()
     {
-//         if (debugPath)
-//         {
-//             DrawPath();
-//         }
-
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(randomLocation, 1);
     }
@@ -135,8 +127,12 @@ public class LaunchPlayer : MonoBehaviour
         {
             LaunchRigidBody = other.GetComponent<Rigidbody>();
             Vector3 spawnedPos = generateRandomSpawnLocation();
-            GameObject newSpawnPlace = Instantiate(ObjectToSpawnPrefab, spawnedPos,Quaternion.identity);
+            Vector3 newLookRot = Quaternion.LookRotation(transform.position- spawnedPos, Vector3.up).eulerAngles;
+            newLookRot.x = newLookRot.z = 0;
+            GameObject newSpawnPlace = Instantiate(ObjectToSpawnPrefab, spawnedPos,Quaternion.Euler(newLookRot));
             LaunchPlayer launcher = newSpawnPlace.GetComponent<LaunchPlayer>();
+      
+            // previous launchPad is removed from the scene
             if (launcher)
             {
                 launcher.previousLauncher = this;
@@ -146,19 +142,11 @@ public class LaunchPlayer : MonoBehaviour
                 previousLauncher.DestroyObjectAnditsItems();
             }
             newSpawnPlace.name = "PlayerFallPlace";
-            Debug.Log(spawnedPos);
          
-            boxCollier = newSpawnPlace.GetComponent<BoxCollider>();
-            randomLocation = MyMath.GetRandomPointInCollider(boxCollier);
-
-            
+            randomLocation = newSpawnPlace.GetComponentInChildren<LandLocationCollider>().generateRandomPoint();
             Launch(randomLocation);
             SpawnPickableItems(newSpawnPlace.transform.position);
           
-
-           
-        
-
         }
     }
 
