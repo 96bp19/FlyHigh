@@ -23,6 +23,8 @@ public class LaunchPlayer : MonoBehaviour
 
     public LaunchPlayer previousLauncher;
 
+    public GameObject ImpactParticle;
+
 
     
 
@@ -146,6 +148,9 @@ public class LaunchPlayer : MonoBehaviour
             randomLocation = newSpawnPlace.GetComponentInChildren<LandLocationCollider>().generateRandomPoint();
             Launch(randomLocation);
             SpawnPickableItems(newSpawnPlace.transform.position);
+
+            UI_Manager.Instance.UpdateLandingText(Vector3.Distance(other.transform.position, transform.position));
+            OnLanded(other.gameObject);
           
         }
     }
@@ -176,6 +181,16 @@ public class LaunchPlayer : MonoBehaviour
         newRandomPoint.y = Mathf.Clamp(newRandomPoint.y,minHeightForSpawn, maxHeightForSpawn);
         return newRandomPoint;
         
+    }
+
+    public void OnLanded(GameObject player)
+    {
+        PlayerController player_controller = player.GetComponent<PlayerController>();
+        if (player)
+        {
+            ImpactParticle.transform.position = player.transform.position;
+            ImpactParticle.SetActive(true);
+        }
     }
 
 

@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
             playermesh.transform.Rotate(0, controlledRotationSpeed * inputs.Horizontal_raw* Time.deltaTime, 0, Space.Self);
             Vector3 clampedAngle = new Vector3(
                 playermesh.transform.localEulerAngles.z,
-                MyMath.ClampAngle(playermesh.localEulerAngles.y, -15, 15),
+                MyMath.ClampAngle(playermesh.localEulerAngles.y, -maxRotateAngle, maxRotateAngle),
                 playermesh.transform.localEulerAngles.z
                 );
 
