@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Item_Invincible : APickUpItems
 {
+    public float invinclibleDuration= 5f;
     public override void OnInteractedWithPlayer(Item_Affectable interactedObj)
     {
-        interactedObj.OnInvincible();
-        this.gameObject.SetActive(false);
+        interactedObj.OnInvincible(invinclibleDuration);
+        gameObject.SetActive(false);
+       
+        
+
     }
+
+ 
 }

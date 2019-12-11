@@ -193,10 +193,31 @@ public static class MyMath
         behaviour.StartCoroutine(DelayRoutine(functionName,delay));
     }
 
+    public static void RunFunctionAfter(System.Action functionName, MonoBehaviour behaviour, float delay, out IEnumerator routine)
+    {
+        //  function call syntax
+        // System.Action a = () => AddForce();
+        // MyMath.RunFunctionAfter(a, this, delay);
+        routine = DelayRoutine(functionName, delay);
+        behaviour.StartCoroutine(routine);
+        
+
+    }
+
     public static IEnumerator DelayRoutine(System.Action functionname , float delay)
     {
+
         yield return new WaitForSeconds(delay);
         functionname();
+    }
+
+    public static void StopCalledFunction(MonoBehaviour behaviour ,IEnumerator routine)
+    {
+        if (routine != null)
+        {
+            behaviour.StopCoroutine(routine);
+
+        }
     }
 
    public static  Vector3 AngleLerp(Vector3 StartAngle, Vector3 FinishAngle, float t)
@@ -207,6 +228,7 @@ public static class MyMath
         Vector3 Lerped = new Vector3(xLerp, yLerp, zLerp);
         return Lerped;
     }
+
 
 }
     public struct cameraToScreenInfo

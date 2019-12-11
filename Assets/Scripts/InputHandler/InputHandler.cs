@@ -9,9 +9,11 @@ public class InputHandler : MonoBehaviour
     private static bool InputEnabled = true;
 
     private static InputData inputData;
+    static InputData input = new InputData(0); 
 
     public static void EnableInput( bool value)
     {
+        inputData = input;
         InputEnabled = value;
     }
 
@@ -50,4 +52,13 @@ public struct InputData
     public float VerticalInp;
     public float Horizontal_raw;
     public float Vertical_raw;
+
+    public InputData( float resetval=0)
+    {
+        HorizontalInp = 0;
+        VerticalInp = 0;
+        Horizontal_raw = 0;
+        Vertical_raw = 0;
+    }
+        
 }
