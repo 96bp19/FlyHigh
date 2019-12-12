@@ -6,9 +6,14 @@ public class Item_Affectable : MonoBehaviour
 {
     public Animator anim;
     Rigidbody rb;
+
+    public Rigidbody ragdoll_rb;
     private bool Invincible = false;
 
     private IEnumerator functionRoutine;
+
+    public delegate void _OnBombed();
+    public _OnBombed onBombedListeners;
 
     public bool IsPlayerInvincible()
     {
@@ -50,7 +55,14 @@ public class Item_Affectable : MonoBehaviour
             ApplyInvincibleStateAbility();
             return;
         }
+        
         InputHandler.EnableInput(false);
+        onBombedListeners?.Invoke();
+      
+        ragdoll_rb.AddExplosionForce(30000,transform.position,50);
+
+      
+       
     }
 
     public void OnInvincible(float invincibleTime)

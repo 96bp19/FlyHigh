@@ -39,11 +39,15 @@ public class PlayerController : MonoBehaviour
 
     public void RotateAccordingToVeolocity()
     {
-        Quaternion lookRotation = Quaternion.LookRotation(rb.velocity.normalized, Vector3.up);
-        Quaternion playerRot = transform.rotation;
+        if (rb)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(rb.velocity.normalized, Vector3.up);
+            Quaternion playerRot = transform.rotation;
+            playerRot = Quaternion.Slerp(playerRot, lookRotation, characterRotateSpeed * Time.deltaTime);
+            transform.rotation = playerRot;
 
-        playerRot = Quaternion.Slerp(playerRot, lookRotation, characterRotateSpeed * Time.deltaTime);
-        transform.rotation = playerRot;
+        }
+
 
 
         controllingPlayer = inputs.Horizontal_raw!= 0;
