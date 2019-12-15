@@ -241,6 +241,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2117817514201142953}
   - component: {fileID: 4089871794273523746}
+  - component: {fileID: 7043250454660039861}
+  - component: {fileID: 1242864352977461928}
   m_Layer: 0
   m_Name: LandLoc
   m_TagString: Untagged
@@ -275,6 +277,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   point: {x: 0, y: 0, z: 0}
+--- !u!65 &7043250454660039861
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9106048679268011431}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 100, y: 100, z: 100}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1242864352977461928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9106048679268011431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7c9336ef2746842b2ac391c0c99ac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2544550313663001126
 PrefabInstance:
   m_ObjectHideFlags: 0

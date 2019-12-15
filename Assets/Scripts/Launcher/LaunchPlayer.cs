@@ -91,9 +91,18 @@ public class LaunchPlayer : MonoBehaviour
                 float simulationTime = i / (float)resolution * launchData.timeToTarget;
                 Vector3 displacement = launchData.initialVelocity * simulationTime + Vector3.up * gravity * simulationTime * simulationTime / 2f;
                 Vector3 drawPoint = LaunchRigidBody.position + displacement;
-               
-                   GameObject obj = Instantiate(PickableItemPrefab[Random.Range(0,PickableItemPrefab.Length)], drawPoint, Quaternion.LookRotation(previousDrawPoint- drawPoint));
+
+                if (i == 7)
+                {
+                   GameObject obj = Instantiate(PickableItemPrefab[Random.Range(0,PickableItemPrefab.Length-1)], drawPoint, Quaternion.LookRotation(previousDrawPoint- drawPoint));
                     allpickableItems.Add(obj);
+
+                }
+                else
+                {
+                    GameObject obj = Instantiate(PickableItemPrefab[PickableItemPrefab.Length-1], drawPoint, Quaternion.LookRotation(previousDrawPoint - drawPoint));
+                    allpickableItems.Add(obj);
+                }
                 
 
                 
@@ -130,6 +139,12 @@ public class LaunchPlayer : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (CheckLevelCompleteStatus())
+            {
+                // level complete no need to call this method again;
+                return;
+            }
+               
             LaunchRigidBody = other.GetComponent<Rigidbody>();
             Vector3 spawnedPos = generateRandomSpawnLocation();
             Vector3 newLookRot = Quaternion.LookRotation(transform.position- spawnedPos, Vector3.up).eulerAngles;
@@ -158,6 +173,17 @@ public class LaunchPlayer : MonoBehaviour
         }
     }
 
+     bool CheckLevelCompleteStatus()
+    {
+        if (LevelManager.CurrentPlatformCount >=LevelManager.Instance.noOfPlatformBeforeGameEnds)
+        {
+            LevelManager.OnlevelComplete();
+            return true;
+        }
+        LevelManager.CurrentPlatformCount++;
+        return false;
+    }
+
     // removes previous launcher and its spawned items
     public void DestroyObjectAnditsItems()
     {
@@ -177,7 +203,7 @@ public class LaunchPlayer : MonoBehaviour
 
 
     public float Randomgenerationrange =100;
-    float minHeightForSpawn= 0, maxHeightForSpawn=200;
+    float minHeightForSpawn= 20, maxHeightForSpawn=200;
     Vector3 generateRandomSpawnLocation()
     {
         Vector3 newRandomPoint = MyMath.RandomVectorInRange(transform.position - new Vector3(Randomgenerationrange, 10, Randomgenerationrange), transform.position + new Vector3(Randomgenerationrange, 10, Randomgenerationrange));
@@ -186,6 +212,7 @@ public class LaunchPlayer : MonoBehaviour
         
     }
 
+    // this function is used to spawn particle only
     public void OnLanded(GameObject player)
     {
         PlayerController player_controller = player.GetComponent<PlayerController>();

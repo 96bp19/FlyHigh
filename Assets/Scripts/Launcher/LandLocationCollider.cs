@@ -9,16 +9,6 @@ public class LandLocationCollider : MonoBehaviour
     float minRandomRage =-30, maxRandomRange =30;
 
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-         
-            generateRandomPoint();
-        }
-  
-    }
-
     public Vector3 generateRandomPoint()
     {
         point = zeroVector;
