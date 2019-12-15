@@ -6,7 +6,7 @@ public class BackgroundLevelRemover : MonoBehaviour
 {
     private void Start()
     {
-        LevelManager.RemovePreviousObstacles();
+       
     }
 
     private void OnTriggerEnter(Collider other)

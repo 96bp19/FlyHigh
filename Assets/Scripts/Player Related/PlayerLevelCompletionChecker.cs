@@ -36,21 +36,44 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
         LevelManager.levelFailedEventListeners -= OnLevelFailed;
 
         // do stuff when level fails
-        GetComponent<PlayerController>().enabled = false;
+     
         
 
     }
 
+    GameObject lastCollidedObject = null;
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             if (!itemAffectable.IsPlayerInvincible())
             {
-                LevelManager.OnPlayerDied();
-                GetComponent<RagdollController>().EnableRagdoll(true);
+                Debug.Log("collided with : " + collision.gameObject.name);
+                lastCollidedObject = collision.gameObject;
+                Invoke("CheckForCollisionObject", 1);
 
             }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            lastCollidedObject = null;
+              
+
+            
+        }
+    }
+
+    void CheckForCollisionObject()
+    {
+        if (lastCollidedObject != null && lastCollidedObject.activeInHierarchy)
+        {
+            LevelManager.OnPlayerDied();
+            GetComponent<RagdollController>().EnableRagdoll(true);
+
         }
     }
 }

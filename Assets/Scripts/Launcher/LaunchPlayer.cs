@@ -159,6 +159,7 @@ public class LaunchPlayer : MonoBehaviour
             }
             if (previousLauncher)
             {
+                 LevelManager.RemovePreviousObstacles();
                 previousLauncher.DestroyObjectAnditsItems();
             }
             newSpawnPlace.name = "PlayerFallPlace";
