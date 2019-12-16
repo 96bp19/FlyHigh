@@ -44,13 +44,13 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
     GameObject lastCollidedObject = null;
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle"))
+        if (collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Ground"))
         {
             if (!itemAffectable.IsPlayerInvincible())
             {
                 Debug.Log("collided with : " + collision.gameObject.name);
                 lastCollidedObject = collision.gameObject;
-                Invoke("CheckForCollisionObject", 1);
+                Invoke("CheckForCollisionObject", 0.1f);
 
             }
         }
@@ -58,12 +58,9 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle"))
+        if (collision.gameObject.CompareTag("Obstacle") )
         {
             lastCollidedObject = null;
-              
-
-            
         }
     }
 
