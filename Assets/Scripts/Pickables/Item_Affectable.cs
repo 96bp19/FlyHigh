@@ -58,6 +58,7 @@ public class Item_Affectable : MonoBehaviour
         
         InputHandler.EnableInput(false);
         onBombedListeners?.Invoke();
+        LevelManager.OnPlayerDied();
       
         ragdoll_rb.AddExplosionForce(30000,transform.position,50);
 
@@ -82,6 +83,11 @@ public class Item_Affectable : MonoBehaviour
         
     }
 
+    public void OnBonusItemPicked()
+    {
+
+    }
+
     void  ApplyInvincibleStateAbility()
     {
         // this functon is called when player lands on bombs or any obstacle when being invincible
@@ -95,4 +101,6 @@ public class Item_Affectable : MonoBehaviour
         functionRoutine = null;
 
     }
+
+
 }

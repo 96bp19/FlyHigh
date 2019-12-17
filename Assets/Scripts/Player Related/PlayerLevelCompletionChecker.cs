@@ -12,13 +12,13 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
         itemAffectable = GetComponent<Item_Affectable>();
         LevelManager.levelCompleteEventListeners += OnLevelComplete;
         LevelManager.levelFailedEventListeners += OnLevelFailed;
+        LevelManager.LevelRestartEventListeners += OnlevelRestarted;
     }
 
     public void OnLevelComplete()
     {
-        // unsubscribe from the events first
-        LevelManager.levelCompleteEventListeners -= OnLevelComplete;
-        LevelManager.levelFailedEventListeners -= OnLevelFailed;
+       
+     
 
         // do stuff when level completes
         if (GetComponent<Rigidbody>())
@@ -39,6 +39,17 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
      
         
 
+    }
+
+    public void OnlevelRestarted()
+    {
+        GetComponent<RagdollController>().EnableRagdoll(false);
+        if (GetComponent<Rigidbody>())
+        {
+            GetComponent<Rigidbody>().isKinematic = false;
+
+        }
+        InputHandler.EnableInput(true);
     }
 
     GameObject lastCollidedObject = null;
