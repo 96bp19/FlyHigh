@@ -34,20 +34,20 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
 
         // do stuff when level fails
         UnSubscribeFromEvent();
-     
+        InputHandler.EnableInput(false);
         
 
     }
 
     void UnSubscribeFromEvent()
     {
-        LevelManager.Instance.levelCompleteEvent.RemoveListener(OnLevelComplete);
-        LevelManager.Instance.levelFailedEvent.RemoveListener(OnLevelFailed);
+        LevelManager.Instance.levelCompleteEventListener.RemoveListener(OnLevelComplete);
+        LevelManager.Instance.levelFailedEventListener.RemoveListener(OnLevelFailed);
     }
     void SubscribeToEvents()
     {
-        LevelManager.Instance.levelCompleteEvent.AddListener(OnLevelComplete);
-        LevelManager.Instance.levelFailedEvent.AddListener(OnLevelFailed);
+        LevelManager.Instance.levelCompleteEventListener.AddListener(OnLevelComplete);
+        LevelManager.Instance.levelFailedEventListener.AddListener(OnLevelFailed);
 
     }
 
@@ -67,7 +67,7 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
             {
                 Debug.Log("collided with : " + collision.gameObject.name);
                 lastCollidedObject = collision.gameObject;
-                Invoke("CheckForCollisionObject", 0.1f);
+                Invoke("CheckForCollisionObject", 0.5f);
 
             }
         }

@@ -7,7 +7,8 @@ public class LevelManager : MonoBehaviour
 {
     public static List<GameObject> obstacles = new List<GameObject>();
     public int noOfPlatformBeforeGameEnds;
-    public bool levelReplayed= false;
+    public float menuShowDelay = 2f;
+
 
     [HideInInspector]
     public bool ragdollEnabled = false;
@@ -34,8 +35,14 @@ public class LevelManager : MonoBehaviour
         
     }
 
-    public UnityEvent levelCompleteEvent;
-    public UnityEvent levelFailedEvent;
+    [HideInInspector]
+    public UnityEvent levelCompleteEventListener;
+    [HideInInspector]
+    public UnityEvent levelFailedEventListener;
+
+
+    public UnityEvent levelCompleteGUI_event;
+    public UnityEvent levelFailedGUI_event;
 
 
 
@@ -62,7 +69,8 @@ public class LevelManager : MonoBehaviour
         SaveManager.SaveData(saveFile);
 
         // Invoke Level complete event
-        levelCompleteEvent.Invoke();
+        levelCompleteEventListener.Invoke();
+        Invoke("OnLevelCompleteGUI", menuShowDelay);
 
     }
 
@@ -72,8 +80,19 @@ public class LevelManager : MonoBehaviour
     {   
         levelCompleted = true;
         //invoke levelFailed event
-        levelFailedEvent.Invoke();
+        levelFailedEventListener.Invoke();
+        Invoke("OnLevelFailedGUI", menuShowDelay);
+        
    
+    }
+    void OnLevelCompleteGUI()
+    {
+        levelCompleteGUI_event.Invoke();
+    }
+
+    void OnLevelFailedGUI()
+    {
+        levelFailedGUI_event.Invoke();
     }
 
     public static void RemovePreviousObstacles()
