@@ -62,15 +62,12 @@ public class RagdollController : MonoBehaviour
             item.isKinematic = enableRagdoll;
             if (enableRagdoll ==true)
             {
-                Destroy(item);
+              
+                item.isKinematic = enableRagdoll;
             }
             
             
         }
-        if (enableRagdoll)
-        {
-            gameObject.tag = "Finish";
-
-        }
+       
     }
 }

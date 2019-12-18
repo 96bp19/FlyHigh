@@ -1,13 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LevelManager : MonoBehaviour
 {
     public static List<GameObject> obstacles = new List<GameObject>();
-
     public int noOfPlatformBeforeGameEnds;
+    public float menuShowDelay = 2f;
+
+
+    [HideInInspector]
+    public bool ragdollEnabled = false;
     public static int CurrentPlatformCount = 0;
+
+   
+    [SerializeField]
+    public int bonuslevelAfter = 5;
+
+    public LaunchPlayer launchPadPrefab;
 
 
     private static LevelManager _Instance;
@@ -24,23 +35,64 @@ public class LevelManager : MonoBehaviour
         
     }
 
-    public delegate void LevelCompleteEvent();
-    public static LevelCompleteEvent levelCompleteEventListeners;
-
-    public delegate void LevelFailedEvent();
-    public static LevelFailedEvent levelFailedEventListeners;
-
+    [HideInInspector]
+    public UnityEvent levelCompleteEventListener;
+    [HideInInspector]
+    public UnityEvent levelFailedEventListener;
 
 
-    public static void OnlevelComplete()
+    public UnityEvent levelCompleteGUI_event;
+    public UnityEvent levelFailedGUI_event;
+
+
+
+    public delegate void OnlevelRestarted();
+    public static OnlevelRestarted LevelRestartEventListeners;
+
+    public static saveData saveFile;
+
+    GameObject Player;
+
+    static bool levelCompleted;
+
+    private void Awake()
     {
-        levelCompleteEventListeners?.Invoke();
+        saveFile = SaveManager.LoadData();
+       
     }
 
-    public static void OnPlayerDied()
+    public void OnlevelComplete()
     {
-        levelFailedEventListeners?.Invoke();
+       
+        levelCompleted = true;
+        saveFile.currentLevel++;
+        SaveManager.SaveData(saveFile);
+
+        // Invoke Level complete event
+        levelCompleteEventListener.Invoke();
+        Invoke("OnLevelCompleteGUI", menuShowDelay);
+
+    }
+
+   
+
+    public void OnPlayerDied()
+    {   
+        levelCompleted = true;
+        //invoke levelFailed event
+        levelFailedEventListener.Invoke();
+        Invoke("OnLevelFailedGUI", menuShowDelay);
         
+   
+    }
+    void OnLevelCompleteGUI()
+    {
+        levelCompleteGUI_event.Invoke();
+    }
+
+    void OnLevelFailedGUI()
+    {
+        levelFailedGUI_event.Invoke();
     }
 
     public static void RemovePreviousObstacles()
@@ -65,6 +117,67 @@ public class LevelManager : MonoBehaviour
             obstacles.Add(objToAdd);
             Debug.Log("added to list");
         }
+    }
+
+    public bool isBonusStage()
+    {
+        return saveFile.currentLevel % bonuslevelAfter == 0;
+    }
+
+    public int getCurrentLevel()
+    {
+        return saveFile.currentLevel;
+    }
+
+    public void RestartLevel()
+    {
+        CurrentPlatformCount = 0;
+        LevelRestartEventListeners?.Invoke();
+        GenerateLevel();
+    }
+
+    private void Start()
+    {
+        Player = FindObjectOfType<PlayerController>().gameObject;
+        GenerateLevel();
+    }
+
+   
+
+    public void NextLevel()
+    {
+        //GenerateLevel();
+        RestartLevel();
+    }
+
+    void GenerateLevel()
+    {
+        levelCompleted = false;
+        LaunchPlayer launcher = FindObjectOfType<LaunchPlayer>();
+        
+        
+       
+
+        if (launcher)
+        {
+            launcher.transform.parent = null;
+            launcher.transform.position = launcher.generateRandomSpawnLocation();
+        }
+        else
+        {
+            launcher = Instantiate(launchPadPrefab, transform) as LaunchPlayer;
+            launcher.transform.parent = null;
+            launcher.transform.position = launcher.generateRandomSpawnLocation();
+            
+        }
+
+        if (Player)
+        {
+            Player.GetComponent<Rigidbody>().velocity = new Vector3(0, Player.GetComponent<Rigidbody>().velocity.y, 0);
+            
+            Player.transform.position = launcher.transform.position + Vector3.up * 10;
+        }
+     
     }
        
 }

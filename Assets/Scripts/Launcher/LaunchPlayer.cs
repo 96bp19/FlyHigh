@@ -6,8 +6,11 @@ using UnityEngine;
 public class LaunchPlayer : MonoBehaviour
 {
     // rigidbody component of any object that needs to be launched
+    [HideInInspector]
     public Rigidbody LaunchRigidBody;
   
+    [HideInInspector]
+    public LaunchPlayer previousLauncher;
 
     public float height = 10;
     public float gravity = -10;
@@ -16,22 +19,37 @@ public class LaunchPlayer : MonoBehaviour
     bool jumpckeck = true, colisionCheck = false;
 
     private Vector3 randomLocation;
-    public GameObject ObjectToSpawnPrefab;
-    public GameObject[] PickableItemPrefab;
+    public GameObject launchPadPrefab;
+    public GameObject RingItemPrefab;
+    public GameObject bonusLevelItemPrefab;
+
+    GameObject Player;
+    
 
     List<GameObject> allpickableItems = new List<GameObject>();
 
-    public LaunchPlayer previousLauncher;
 
     public GameObject ImpactParticle;
 
+  
+    public levelSpawnableItems[] objectToSpawnBasedOnLevel;
 
     
+    
+    
+    [System.Serializable]
+    public struct levelSpawnableItems
+    {
+        public int MaxLevelRange;
+        public GameObject[] itemToSpawn;
+
+        
+    }
 
     void Start()
     {
-       
-
+        Player = FindObjectOfType<PlayerController>().gameObject;
+        
 
     }
 
@@ -92,16 +110,26 @@ public class LaunchPlayer : MonoBehaviour
                 Vector3 displacement = launchData.initialVelocity * simulationTime + Vector3.up * gravity * simulationTime * simulationTime / 2f;
                 Vector3 drawPoint = LaunchRigidBody.position + displacement;
 
-                if (i == 7)
-                {
-                   GameObject obj = Instantiate(PickableItemPrefab[Random.Range(0,PickableItemPrefab.Length-1)], drawPoint, Quaternion.LookRotation(previousDrawPoint- drawPoint));
-                    allpickableItems.Add(obj);
 
+                if (LevelManager.Instance.isBonusStage())
+                {
+                    GameObject obj = Instantiate(bonusLevelItemPrefab, drawPoint, Quaternion.LookRotation(previousDrawPoint - drawPoint));
+                    allpickableItems.Add(obj);
                 }
                 else
                 {
-                    GameObject obj = Instantiate(PickableItemPrefab[PickableItemPrefab.Length-1], drawPoint, Quaternion.LookRotation(previousDrawPoint - drawPoint));
-                    allpickableItems.Add(obj);
+                    if (i == 7)
+                    {
+                        GameObject obj = Instantiate(getPickableItembasedOnlevel(), drawPoint, Quaternion.LookRotation(previousDrawPoint- drawPoint));
+                        allpickableItems.Add(obj);
+
+                    }
+                    else
+                    {
+                        GameObject obj = Instantiate(RingItemPrefab, drawPoint, Quaternion.LookRotation(previousDrawPoint - drawPoint));
+                        allpickableItems.Add(obj);
+                    }
+
                 }
                 
 
@@ -135,6 +163,23 @@ public class LaunchPlayer : MonoBehaviour
 
     }
 
+
+    GameObject getPickableItembasedOnlevel()
+    {
+        GameObject obj = null;
+        foreach (var item in objectToSpawnBasedOnLevel)
+        {
+            if (LevelManager.Instance.getCurrentLevel() <= item.MaxLevelRange)
+            {
+                obj = item.itemToSpawn[Random.Range(0, item.itemToSpawn.Length)];
+                break;
+            }
+        }
+
+        return obj;
+    }
+   
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -149,7 +194,7 @@ public class LaunchPlayer : MonoBehaviour
             Vector3 spawnedPos = generateRandomSpawnLocation();
             Vector3 newLookRot = Quaternion.LookRotation(transform.position- spawnedPos, Vector3.up).eulerAngles;
             newLookRot.x = newLookRot.z = 0;
-            GameObject newSpawnPlace = Instantiate(ObjectToSpawnPrefab, spawnedPos,Quaternion.Euler(newLookRot));
+            GameObject newSpawnPlace = Instantiate(launchPadPrefab, spawnedPos,Quaternion.Euler(newLookRot));
             LaunchPlayer launcher = newSpawnPlace.GetComponent<LaunchPlayer>();
       
             // previous launchPad is removed from the scene
@@ -159,7 +204,7 @@ public class LaunchPlayer : MonoBehaviour
             }
             if (previousLauncher)
             {
-                 LevelManager.RemovePreviousObstacles();
+                LevelManager.RemovePreviousObstacles();
                 previousLauncher.DestroyObjectAnditsItems();
             }
             newSpawnPlace.name = "PlayerFallPlace";
@@ -178,7 +223,7 @@ public class LaunchPlayer : MonoBehaviour
     {
         if (LevelManager.CurrentPlatformCount >=LevelManager.Instance.noOfPlatformBeforeGameEnds)
         {
-            LevelManager.OnlevelComplete();
+            LevelManager.Instance.OnlevelComplete();
             return true;
         }
         LevelManager.CurrentPlatformCount++;
@@ -205,7 +250,7 @@ public class LaunchPlayer : MonoBehaviour
 
     public float Randomgenerationrange =100;
     float minHeightForSpawn= 20, maxHeightForSpawn=200;
-    Vector3 generateRandomSpawnLocation()
+    public Vector3 generateRandomSpawnLocation()
     {
         Vector3 newRandomPoint = MyMath.RandomVectorInRange(transform.position - new Vector3(Randomgenerationrange, 10, Randomgenerationrange), transform.position + new Vector3(Randomgenerationrange, 10, Randomgenerationrange));
         newRandomPoint.y = Mathf.Clamp(newRandomPoint.y,minHeightForSpawn, maxHeightForSpawn);
@@ -223,6 +268,8 @@ public class LaunchPlayer : MonoBehaviour
             ImpactParticle.SetActive(true);
         }
     }
+
+    
 
 
    

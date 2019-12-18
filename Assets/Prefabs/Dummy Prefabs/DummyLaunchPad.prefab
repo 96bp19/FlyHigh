@@ -61,17 +61,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LaunchRigidBody: {fileID: 0}
+  previousLauncher: {fileID: 0}
   height: 50
   gravity: -10
   debugPath: 0
-  ObjectToSpawnPrefab: {fileID: 899640047990296999}
-  PickableItemPrefab:
-  - {fileID: 75566404202180736, guid: 752a06f377ded2b4ea52418dcdebdcb7, type: 3}
-  - {fileID: 3604831821789594526, guid: 8a575686859746e46a5cedf2b8cb0f2f, type: 3}
-  - {fileID: 1935413841920330136, guid: efb3a50a5b992a143bd90d1c7f7eebfd, type: 3}
-  - {fileID: 6185524398939858101, guid: 932190bb543b4ba4b91b051670e7287c, type: 3}
-  previousLauncher: {fileID: 0}
+  launchPadPrefab: {fileID: 899640047990296999}
+  RingItemPrefab: {fileID: 6185524398939858101, guid: 932190bb543b4ba4b91b051670e7287c,
+    type: 3}
+  bonusLevelItemPrefab: {fileID: 6528036378111492941, guid: d3d9d094ac1d96c45ba971c84b6a24d6,
+    type: 3}
   ImpactParticle: {fileID: 5623631872220297483}
+  objectToSpawnBasedOnLevel:
+  - MaxLevelRange: 10
+    itemToSpawn:
+    - {fileID: 3604831821789594526, guid: 8a575686859746e46a5cedf2b8cb0f2f, type: 3}
+  - MaxLevelRange: 20
+    itemToSpawn:
+    - {fileID: 1935413841920330136, guid: efb3a50a5b992a143bd90d1c7f7eebfd, type: 3}
+  - MaxLevelRange: 30
+    itemToSpawn:
+    - {fileID: 75566404202180736, guid: 752a06f377ded2b4ea52418dcdebdcb7, type: 3}
+  - MaxLevelRange: 40
+    itemToSpawn:
+    - {fileID: 1935413841920330136, guid: efb3a50a5b992a143bd90d1c7f7eebfd, type: 3}
+    - {fileID: 3604831821789594526, guid: 8a575686859746e46a5cedf2b8cb0f2f, type: 3}
+  - MaxLevelRange: 5000
+    itemToSpawn:
+    - {fileID: 3604831821789594526, guid: 8a575686859746e46a5cedf2b8cb0f2f, type: 3}
+    - {fileID: 1935413841920330136, guid: efb3a50a5b992a143bd90d1c7f7eebfd, type: 3}
+    - {fileID: 75566404202180736, guid: 752a06f377ded2b4ea52418dcdebdcb7, type: 3}
+    - {fileID: 6528036378111492941, guid: d3d9d094ac1d96c45ba971c84b6a24d6, type: 3}
   Randomgenerationrange: 500
 --- !u!1 &9106048679268011431
 GameObject:

@@ -10,15 +10,15 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
     void Start()
     {
         itemAffectable = GetComponent<Item_Affectable>();
-        LevelManager.levelCompleteEventListeners += OnLevelComplete;
-        LevelManager.levelFailedEventListeners += OnLevelFailed;
+
+        SubscribeToEvents();
+        LevelManager.LevelRestartEventListeners += OnlevelRestarted;
     }
 
     public void OnLevelComplete()
     {
-        // unsubscribe from the events first
-        LevelManager.levelCompleteEventListeners -= OnLevelComplete;
-        LevelManager.levelFailedEventListeners -= OnLevelFailed;
+
+        UnSubscribeFromEvent();
 
         // do stuff when level completes
         if (GetComponent<Rigidbody>())
@@ -31,14 +31,31 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
 
     public void OnLevelFailed()
     {
-        // unsubscribe from the event first
-        LevelManager.levelCompleteEventListeners -= OnLevelComplete;
-        LevelManager.levelFailedEventListeners -= OnLevelFailed;
 
         // do stuff when level fails
-     
+        UnSubscribeFromEvent();
+        InputHandler.EnableInput(false);
         
 
+    }
+
+    void UnSubscribeFromEvent()
+    {
+        LevelManager.Instance.levelCompleteEventListener.RemoveListener(OnLevelComplete);
+        LevelManager.Instance.levelFailedEventListener.RemoveListener(OnLevelFailed);
+    }
+    void SubscribeToEvents()
+    {
+        LevelManager.Instance.levelCompleteEventListener.AddListener(OnLevelComplete);
+        LevelManager.Instance.levelFailedEventListener.AddListener(OnLevelFailed);
+
+    }
+
+
+    public void OnlevelRestarted()
+    {
+        SubscribeToEvents();
+       
     }
 
     GameObject lastCollidedObject = null;
@@ -50,7 +67,7 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
             {
                 Debug.Log("collided with : " + collision.gameObject.name);
                 lastCollidedObject = collision.gameObject;
-                Invoke("CheckForCollisionObject", 0.1f);
+                Invoke("CheckForCollisionObject", 0.5f);
 
             }
         }
@@ -68,7 +85,7 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
     {
         if (lastCollidedObject != null && lastCollidedObject.activeInHierarchy)
         {
-            LevelManager.OnPlayerDied();
+            LevelManager.Instance.OnPlayerDied();
             GetComponent<RagdollController>().EnableRagdoll(true);
 
         }
