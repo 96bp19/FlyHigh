@@ -223,7 +223,7 @@ public class LaunchPlayer : MonoBehaviour
     {
         if (LevelManager.CurrentPlatformCount >=LevelManager.Instance.noOfPlatformBeforeGameEnds)
         {
-            LevelManager.OnlevelComplete();
+            LevelManager.Instance.OnlevelComplete();
             return true;
         }
         LevelManager.CurrentPlatformCount++;
