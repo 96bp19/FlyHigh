@@ -15,6 +15,24 @@ public class Item_Affectable : MonoBehaviour
     public delegate void _OnBombed();
     public _OnBombed onBombedListeners;
 
+
+
+
+    public void OnlevelRestarted()
+    {
+       
+        GetComponent<RagdollController>().EnableRagdoll(false);
+        if (GetComponent<Rigidbody>())
+        {
+            GetComponent<Rigidbody>().isKinematic = false;
+
+        }
+        InputHandler.EnableInput(true);
+        anim.speed = 1;
+        Invincible = false;
+
+    }
+
     public bool IsPlayerInvincible()
     {
         return Invincible;
@@ -31,6 +49,7 @@ public class Item_Affectable : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        LevelManager.LevelRestartEventListeners += OnlevelRestarted;
     }
 
 
@@ -58,7 +77,7 @@ public class Item_Affectable : MonoBehaviour
         
         InputHandler.EnableInput(false);
         onBombedListeners?.Invoke();
-        LevelManager.OnPlayerDied();
+        LevelManager.Instance.OnPlayerDied();
       
         ragdoll_rb.AddExplosionForce(30000,transform.position,50);
 

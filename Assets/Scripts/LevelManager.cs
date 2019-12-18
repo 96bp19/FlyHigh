@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LevelManager : MonoBehaviour
 {
     public static List<GameObject> obstacles = new List<GameObject>();
-
     public int noOfPlatformBeforeGameEnds;
+    public bool levelReplayed= false;
+
+    [HideInInspector]
+    public bool ragdollEnabled = false;
     public static int CurrentPlatformCount = 0;
 
-    [SerializeField]
-    private int currentLevel =10;
+   
     [SerializeField]
     public int bonuslevelAfter = 5;
 
@@ -31,30 +34,46 @@ public class LevelManager : MonoBehaviour
         
     }
 
-    public delegate void LevelCompleteEvent();
-    public static LevelCompleteEvent levelCompleteEventListeners;
+    public UnityEvent levelCompleteEvent;
+    public UnityEvent levelFailedEvent;
 
-    public delegate void LevelFailedEvent();
-    public static LevelFailedEvent levelFailedEventListeners;
+
 
     public delegate void OnlevelRestarted();
     public static OnlevelRestarted LevelRestartEventListeners;
+
+    public static saveData saveFile;
 
     GameObject Player;
 
     static bool levelCompleted;
 
-    public static void OnlevelComplete()
+    private void Awake()
     {
-        levelCompleteEventListeners?.Invoke();
-        levelCompleted = true;
+        saveFile = SaveManager.LoadData();
+       
     }
 
-    public static void OnPlayerDied()
+    public void OnlevelComplete()
     {
-        levelFailedEventListeners?.Invoke();
+       
         levelCompleted = true;
-        
+        saveFile.currentLevel++;
+        SaveManager.SaveData(saveFile);
+
+        // Invoke Level complete event
+        levelCompleteEvent.Invoke();
+
+    }
+
+   
+
+    public void OnPlayerDied()
+    {   
+        levelCompleted = true;
+        //invoke levelFailed event
+        levelFailedEvent.Invoke();
+   
     }
 
     public static void RemovePreviousObstacles()
@@ -83,21 +102,17 @@ public class LevelManager : MonoBehaviour
 
     public bool isBonusStage()
     {
-        return currentLevel % bonuslevelAfter == 0;
+        return saveFile.currentLevel % bonuslevelAfter == 0;
     }
 
     public int getCurrentLevel()
     {
-        return currentLevel;
+        return saveFile.currentLevel;
     }
 
-    public void setCurrentLevel(int levelcount)
+    public void RestartLevel()
     {
-        currentLevel = levelcount;
-    }
-
-    public void ResetLevelStats()
-    {
+        CurrentPlatformCount = 0;
         LevelRestartEventListeners?.Invoke();
         GenerateLevel();
     }
@@ -108,23 +123,15 @@ public class LevelManager : MonoBehaviour
         GenerateLevel();
     }
 
-    public bool ragdollEnabled = false;
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R) && levelCompleted)
-        {
-            // GenerateLevel();
-            ResetLevelStats();
-           
-        }
-    }
+   
 
     public void NextLevel()
     {
-        GenerateLevel();
+        //GenerateLevel();
+        RestartLevel();
     }
 
-   public void GenerateLevel()
+    void GenerateLevel()
     {
         levelCompleted = false;
         LaunchPlayer launcher = FindObjectOfType<LaunchPlayer>();

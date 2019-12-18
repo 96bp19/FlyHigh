@@ -10,15 +10,15 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
     void Start()
     {
         itemAffectable = GetComponent<Item_Affectable>();
-        LevelManager.levelCompleteEventListeners += OnLevelComplete;
-        LevelManager.levelFailedEventListeners += OnLevelFailed;
+
+        SubscribeToEvents();
         LevelManager.LevelRestartEventListeners += OnlevelRestarted;
     }
 
     public void OnLevelComplete()
     {
-       
-     
+
+        UnSubscribeFromEvent();
 
         // do stuff when level completes
         if (GetComponent<Rigidbody>())
@@ -31,25 +31,31 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
 
     public void OnLevelFailed()
     {
-        // unsubscribe from the event first
-        LevelManager.levelCompleteEventListeners -= OnLevelComplete;
-        LevelManager.levelFailedEventListeners -= OnLevelFailed;
 
         // do stuff when level fails
+        UnSubscribeFromEvent();
      
         
 
     }
 
+    void UnSubscribeFromEvent()
+    {
+        LevelManager.Instance.levelCompleteEvent.RemoveListener(OnLevelComplete);
+        LevelManager.Instance.levelFailedEvent.RemoveListener(OnLevelFailed);
+    }
+    void SubscribeToEvents()
+    {
+        LevelManager.Instance.levelCompleteEvent.AddListener(OnLevelComplete);
+        LevelManager.Instance.levelFailedEvent.AddListener(OnLevelFailed);
+
+    }
+
+
     public void OnlevelRestarted()
     {
-        GetComponent<RagdollController>().EnableRagdoll(false);
-        if (GetComponent<Rigidbody>())
-        {
-            GetComponent<Rigidbody>().isKinematic = false;
-
-        }
-        InputHandler.EnableInput(true);
+        SubscribeToEvents();
+       
     }
 
     GameObject lastCollidedObject = null;
@@ -79,7 +85,7 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
     {
         if (lastCollidedObject != null && lastCollidedObject.activeInHierarchy)
         {
-            LevelManager.OnPlayerDied();
+            LevelManager.Instance.OnPlayerDied();
             GetComponent<RagdollController>().EnableRagdoll(true);
 
         }
