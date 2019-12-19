@@ -189,6 +189,7 @@ public class LaunchPlayer : MonoBehaviour
                 // level complete no need to call this method again;
                 return;
             }
+            other.GetComponent<PlayerParticleController>().OnPlayerLaunched();
                
             LaunchRigidBody = other.GetComponent<Rigidbody>();
             Vector3 spawnedPos = generateRandomSpawnLocation();

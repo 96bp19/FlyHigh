@@ -58,36 +58,37 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
        
     }
 
-    GameObject lastCollidedObject = null;
+ 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Ground"))
+        if ( collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Obstacle"))
         {
             if (!itemAffectable.IsPlayerInvincible())
             {
                 Debug.Log("collided with : " + collision.gameObject.name);
-                lastCollidedObject = collision.gameObject;
-                Invoke("CheckForCollisionObject", 0.5f);
+                // Invoke("CheckForCollisionObject", 0.01f);
+                if (collision.gameObject.GetComponent<Collider>().enabled)
+                {
+                    LevelManager.Instance.OnPlayerDied();
+                    GetComponent<RagdollController>().EnableRagdoll(true);
+
+                }
 
             }
         }
+       
     }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Obstacle") )
-        {
-            lastCollidedObject = null;
-        }
-    }
+   
 
     void CheckForCollisionObject()
     {
-        if (lastCollidedObject != null && lastCollidedObject.activeInHierarchy)
-        {
+//         if (lastCollidedObject != null && lastCollidedObject.activeInHierarchy)
+//         {
+            Debug.Log("mission fail invoked");
             LevelManager.Instance.OnPlayerDied();
             GetComponent<RagdollController>().EnableRagdoll(true);
 
-        }
+ //       }
     }
 }
