@@ -6,7 +6,12 @@ ModelImporter:
   - first:
       74: -203655887218126122
     second: mixamo.com
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: helmet_guy
+    second: {fileID: 2100000, guid: 13593fced66b4ad448d0fa736e065f02, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

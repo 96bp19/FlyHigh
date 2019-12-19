@@ -55,11 +55,11 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("rotating player according to inputs");
            
-            playermesh.transform.Rotate(0, controlledRotationSpeed * inputs.Horizontal_raw* Time.deltaTime, 0, Space.Self);
+            playermesh.transform.Rotate(0, controlledRotationSpeed * inputs.Horizontal_raw* Time.deltaTime,-1* controlledRotationSpeed * inputs.Horizontal_raw * Time.deltaTime, Space.Self);
             Vector3 clampedAngle = new Vector3(
-                playermesh.transform.localEulerAngles.z,
+                playermesh.transform.localEulerAngles.x,
                 MyMath.ClampAngle(playermesh.localEulerAngles.y, -maxRotateAngle, maxRotateAngle),
-                playermesh.transform.localEulerAngles.z
+                MyMath.ClampAngle(playermesh.localEulerAngles.z, -maxRotateAngle, maxRotateAngle)    
                 );
 
             playermesh.localEulerAngles = clampedAngle;
@@ -83,22 +83,10 @@ public class PlayerController : MonoBehaviour
 
     public void MovePlayer()
     {
-        //  Vector3 applideForce = transform.right * moveForce * inputs.HorizontalInp* Time.fixedDeltaTime;
-        // rb.AddForce(applideForce, ForceMode.VelocityChange);
-        //  Debug.Log("Player moved");
-
-      
-       
+         
         Vector3 newMovePos = Vector3.right * moveSpeed*inputs.HorizontalInp * Time.deltaTime;
         Debug.DrawRay(transform.position, transform.right * 10* inputs.HorizontalInp, Color.blue);
         transform.Translate(newMovePos);
-       
-       
-
    
-       
-
-          
-        
     }
 }

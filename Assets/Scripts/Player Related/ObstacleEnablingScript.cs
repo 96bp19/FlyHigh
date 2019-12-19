@@ -12,7 +12,7 @@ public class ObstacleEnablingScript : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log(name + " disabled");
+      
         GetComponent<BoxCollider>().enabled = false;
     }
 
