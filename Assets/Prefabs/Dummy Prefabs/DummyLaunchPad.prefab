@@ -63,7 +63,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LaunchRigidBody: {fileID: 0}
   previousLauncher: {fileID: 0}
-  height: 50
+  height: 12
   gravity: -10
   debugPath: 0
   launchPadPrefab: {fileID: 899640047990296999}
@@ -93,6 +93,12 @@ MonoBehaviour:
     - {fileID: 75566404202180736, guid: 752a06f377ded2b4ea52418dcdebdcb7, type: 3}
     - {fileID: 6528036378111492941, guid: d3d9d094ac1d96c45ba971c84b6a24d6, type: 3}
   Randomgenerationrange: 500
+  minHeightForSpawn: 1
+  maxHeightForSpawn: 1
+  minDistance: 180
+  maxDistance: 250
+  spawnangle: 120
+  maxAllowedHeight: 100
 --- !u!1 &9106048679268011431
 GameObject:
   m_ObjectHideFlags: 0

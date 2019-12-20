@@ -229,6 +229,50 @@ public static class MyMath
         return Lerped;
     }
 
+    public static void getDirectionVectorsFromAngle(float angleInDegree, out Vector3 vector1, out Vector3 vector2, Transform relativeTransform)
+    {
+        vector1 = new Vector3(Mathf.Cos(angleInDegree / 2 * Mathf.Deg2Rad), 0, Mathf.Sin(angleInDegree / 2 * Mathf.Deg2Rad));
+        vector1 = relativeTransform.TransformDirection(vector1).normalized;
+
+        vector2 = new Vector3(Mathf.Cos(-angleInDegree / 2 * Mathf.Deg2Rad), 0, Mathf.Sin(-angleInDegree / 2 * Mathf.Deg2Rad));
+        vector2 = relativeTransform.TransformDirection(vector2).normalized;
+
+
+    }
+
+    public static Vector3 getRandomDirectionVectorWithinRange(float angle, Transform relativeTransform)
+    {
+
+        float randomAngle = Random.Range(-angle / 2, angle / 2);
+        Vector3 point = new Vector3(Mathf.Cos(randomAngle * Mathf.Deg2Rad), 0, Mathf.Sin(randomAngle * Mathf.Deg2Rad));
+        return relativeTransform.TransformDirection(point).normalized;
+
+    }
+    public static LaunchData CalculateLaunchData(Vector3 targetLoc, Rigidbody LaunchRigidBody,float height,float gravity)
+    {
+
+        height += targetLoc.y;
+        float displacementY = targetLoc.y - LaunchRigidBody.position.y;
+        Vector3 displacementXZ = new Vector3(targetLoc.x - LaunchRigidBody.position.x, 0, targetLoc.z - LaunchRigidBody.position.z);
+        float time = Mathf.Sqrt(-2 * height / gravity) + Mathf.Sqrt(2 * (displacementY - height) / gravity);
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * height);
+        Vector3 velocityXZ = displacementXZ / time;
+
+        return new LaunchData(velocityXZ + velocityY * -Mathf.Sign(gravity), time);
+    }
+
+    public struct LaunchData
+    {
+        public readonly Vector3 initialVelocity;
+        public readonly float timeToTarget;
+        public LaunchData(Vector3 initialVelocity, float timeToTarget)
+        {
+            this.initialVelocity = initialVelocity;
+            this.timeToTarget = timeToTarget;
+        }
+
+    }
+
 
 }
     public struct cameraToScreenInfo

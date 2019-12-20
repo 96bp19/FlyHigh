@@ -12,7 +12,7 @@ public class LaunchPlayer : MonoBehaviour
     [HideInInspector]
     public LaunchPlayer previousLauncher;
 
-    public float height = 10;
+    public float height = 2;
     public float gravity = -10;
     public bool debugPath;
     public static bool itStoped = false;
@@ -63,10 +63,12 @@ public class LaunchPlayer : MonoBehaviour
     }
     LaunchData CalculateLaunchData(Vector3 targetLoc)
     {
+        float newHeight = targetLoc.y + height;
+        Debug.Log("launch loc : " + targetLoc);
         float displacementY =targetLoc.y - LaunchRigidBody.position.y;
         Vector3 displacementXZ = new Vector3(targetLoc.x - LaunchRigidBody.position.x, 0, targetLoc.z - LaunchRigidBody.position.z);
-        float time = Mathf.Sqrt(-2 * height / gravity) + Mathf.Sqrt(2 * (displacementY - height) / gravity);
-        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * height);
+        float time = Mathf.Sqrt(-2 * newHeight / gravity) + Mathf.Sqrt(2 * (displacementY - newHeight) / gravity);
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * newHeight);
         Vector3 velocityXZ = displacementXZ / time;
 
         return new LaunchData(velocityXZ + velocityY * -Mathf.Sign(gravity), time);
@@ -83,10 +85,7 @@ public class LaunchPlayer : MonoBehaviour
             float simulationTime = i / (float)resolution * launchData.timeToTarget;
             Vector3 displacement = launchData.initialVelocity * simulationTime + Vector3.up * gravity * simulationTime * simulationTime / 2f;
             Vector3 drawPoint = LaunchRigidBody.position + displacement;
-            //Debug.DrawLine(previousDrawPoint, drawPoint, Color.green);
             Gizmos.DrawLine(previousDrawPoint, drawPoint);
-            //GameObject  obj =Instantiate(spherePrefab, transform);
-            //obj.transform.position = previousDrawPoint;
             previousDrawPoint = drawPoint;
         }
     }
@@ -104,7 +103,7 @@ public class LaunchPlayer : MonoBehaviour
         Gizmos.color = Color.green;
         for (int i = 1; i <= resolution; i++)
         {
-            if (i >4)
+            if (i >2)
             {
                 float simulationTime = i / (float)resolution * launchData.timeToTarget;
                 Vector3 displacement = launchData.initialVelocity * simulationTime + Vector3.up * gravity * simulationTime * simulationTime / 2f;
@@ -199,7 +198,7 @@ public class LaunchPlayer : MonoBehaviour
             LaunchPlayer launcher = newSpawnPlace.GetComponent<LaunchPlayer>();
       
             // previous launchPad is removed from the scene
-            if (launcher)
+            if (launcher)                                           
             {
                 launcher.previousLauncher = this;
             }
@@ -211,6 +210,7 @@ public class LaunchPlayer : MonoBehaviour
             newSpawnPlace.name = "PlayerFallPlace";
          
             randomLocation = newSpawnPlace.GetComponentInChildren<LandLocationCollider>().generateRandomPoint();
+
             Launch(randomLocation);
             SpawnPickableItems(newSpawnPlace.transform.position);
 
@@ -249,12 +249,22 @@ public class LaunchPlayer : MonoBehaviour
     }
 
 
-    public float Randomgenerationrange =100;
-    float minHeightForSpawn= 20, maxHeightForSpawn=200;
+    public float Randomgenerationrange =30;
+    public float minHeightForSpawn= -5, maxHeightForSpawn=5;
+    public float minDistance = 30, maxDistance = 60;
+    public float spawnangle =70f;
+    public float maxAllowedHeight = 100f;
     public Vector3 generateRandomSpawnLocation()
     {
-        Vector3 newRandomPoint = MyMath.RandomVectorInRange(transform.position - new Vector3(Randomgenerationrange, 10, Randomgenerationrange), transform.position + new Vector3(Randomgenerationrange, 10, Randomgenerationrange));
-        newRandomPoint.y = Mathf.Clamp(newRandomPoint.y,minHeightForSpawn, maxHeightForSpawn);
+        float randomDis = Random.Range(minDistance, maxDistance);
+        
+        Vector3 newRandomPoint;
+        newRandomPoint = MyMath.getRandomDirectionVectorWithinRange(spawnangle, transform);
+        newRandomPoint = newRandomPoint * randomDis + transform.position;
+        newRandomPoint.y = transform.position.y;
+        newRandomPoint.y += Random.Range(minHeightForSpawn , maxHeightForSpawn);
+        newRandomPoint.y = Mathf.Clamp(newRandomPoint.y,2, maxAllowedHeight);
+      
         return newRandomPoint;
         
     }
