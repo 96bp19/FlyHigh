@@ -29,7 +29,7 @@ public class Test_ : MonoBehaviour
     {
         point = transform.position;
         launchData = MyMath.CalculateLaunchData(target.transform.position, GetComponent<Rigidbody>(), height, Physics.gravity.y);
-        GetComponent<Rigidbody>().velocity = launchData.initialVelocity;
+        //GetComponent<Rigidbody>().velocity = launchData.initialVelocity;
     }
 
     MyMath.LaunchData launchData;
@@ -40,10 +40,9 @@ public class Test_ : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             float randomPointdistance = Random.Range(minDis, maxDis);
-            float randomAngle = Random.Range(-angle/2, angle/2);
-            point = new Vector3(Mathf.Cos(randomAngle * Mathf.Deg2Rad), 0, Mathf.Sin(randomAngle * Mathf.Deg2Rad));
-            point = transform.TransformDirection(point);
-            point = transform.position + point.normalized * randomPointdistance;
+           
+            point = MyMath.getRandomDirectionVectorWithinRange(angle, transform);
+            point = transform.position +point * randomPointdistance;
         }
     }
 
@@ -51,10 +50,11 @@ public class Test_ : MonoBehaviour
     {
 
         maxDis = Mathf.Max(maxDis, minDis);
-        point_01 = new Vector3(Mathf.Cos(angle/2 * Mathf.Deg2Rad), 0, Mathf.Sin(angle/2 * Mathf.Deg2Rad));
-        point_01 = transform.TransformDirection(point_01);
-        point_02 = new Vector3(Mathf.Cos(-angle / 2 * Mathf.Deg2Rad), 0, Mathf.Sin(-angle / 2 * Mathf.Deg2Rad));
-        point_02 = transform.TransformDirection(point_02);
+        //         point_01 = new Vector3(Mathf.Cos(angle/2 * Mathf.Deg2Rad), 0, Mathf.Sin(angle/2 * Mathf.Deg2Rad));
+        //         point_01 = transform.TransformDirection(point_01);
+        //         point_02 = new Vector3(Mathf.Cos(-angle / 2 * Mathf.Deg2Rad), 0, Mathf.Sin(-angle / 2 * Mathf.Deg2Rad));
+        //         point_02 = transform.TransformDirection(point_02);
+        MyMath.getDirectionVectorsFromAngle(angle, out point_01,out point_02, transform);
         Debug.DrawRay(transform.position, point_01 * maxDis, Color.blue);
         Debug.DrawRay(transform.position, point_02 * maxDis, Color.red);
       

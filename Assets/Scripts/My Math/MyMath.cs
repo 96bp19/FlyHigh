@@ -242,7 +242,7 @@ public static class MyMath
 
     public static Vector3 getRandomDirectionVectorWithinRange(float angle, Transform relativeTransform)
     {
-
+        angle = (int)angle % 360;
         float randomAngle = Random.Range(-angle / 2, angle / 2);
         Vector3 point = new Vector3(Mathf.Cos(randomAngle * Mathf.Deg2Rad), 0, Mathf.Sin(randomAngle * Mathf.Deg2Rad));
         return relativeTransform.TransformDirection(point).normalized;

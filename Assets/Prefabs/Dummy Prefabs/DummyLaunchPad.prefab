@@ -97,7 +97,7 @@ MonoBehaviour:
   maxHeightForSpawn: 1
   minDistance: 180
   maxDistance: 250
-  spawnangle: 120
+  spawnangle: 270
   maxAllowedHeight: 100
 --- !u!1 &9106048679268011431
 GameObject:

@@ -145,11 +145,7 @@ public class LaunchPlayer : MonoBehaviour
         }
     }    
 
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(randomLocation, 1);
-    }
+  
     struct LaunchData
     {
         public readonly Vector3 initialVelocity;
@@ -216,6 +212,8 @@ public class LaunchPlayer : MonoBehaviour
 
             UI_Manager.Instance.UpdateLandingText(Vector3.Distance(other.transform.position, transform.position));
             OnLanded(other.gameObject);
+            newSpawnPlace.transform.position = spawnedPos;
+
           
         }
     }
@@ -250,20 +248,28 @@ public class LaunchPlayer : MonoBehaviour
 
 
     public float Randomgenerationrange =30;
-    public float minHeightForSpawn= -5, maxHeightForSpawn=5;
+    public float minHeightForSpawn= -20, maxHeightForSpawn=20;
     public float minDistance = 30, maxDistance = 60;
     public float spawnangle =70f;
-    public float maxAllowedHeight = 100f;
+    public float maxAllowedHeight = 200f;
     public Vector3 generateRandomSpawnLocation()
     {
+        if (globalTransform == null)
+        {
+            globalTransform = new GameObject().transform;
+        }
+
+        globalTransform.position = transform.position;
+        globalTransform.rotation = Quaternion.Euler(0, spawnangle, 0);
+
         float randomDis = Random.Range(minDistance, maxDistance);
         
         Vector3 newRandomPoint;
-        newRandomPoint = MyMath.getRandomDirectionVectorWithinRange(spawnangle, transform);
-        newRandomPoint = newRandomPoint * randomDis + transform.position;
+        newRandomPoint = MyMath.getRandomDirectionVectorWithinRange(spawnangle, globalTransform);
+        newRandomPoint =  transform.position + newRandomPoint * randomDis;
         newRandomPoint.y = transform.position.y;
         newRandomPoint.y += Random.Range(minHeightForSpawn , maxHeightForSpawn);
-        newRandomPoint.y = Mathf.Clamp(newRandomPoint.y,2, maxAllowedHeight);
+        newRandomPoint.y = Mathf.Clamp(newRandomPoint.y,5, maxAllowedHeight);
       
         return newRandomPoint;
         
@@ -280,10 +286,24 @@ public class LaunchPlayer : MonoBehaviour
         }
     }
 
-    
+    Transform globalTransform;
+    private void OnDrawGizmos()
+    {
+        if (globalTransform == null)
+        {
+            return;
+        }
+
+        
+
+        Vector3 point_01, point_02;
+        MyMath.getDirectionVectorsFromAngle(spawnangle, out point_01, out point_02, globalTransform);
+        Debug.DrawRay(transform.position, point_01 * maxDistance, Color.blue);
+        Debug.DrawRay(transform.position, point_02 * maxDistance, Color.red);
+    }
 
 
-   
+
 
 
 
