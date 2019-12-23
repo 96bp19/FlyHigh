@@ -64,7 +64,6 @@ public class LaunchPlayer : MonoBehaviour
     LaunchData CalculateLaunchData(Vector3 targetLoc)
     {
         float newHeight = targetLoc.y + height;
-        Debug.Log("launch loc : " + targetLoc);
         float displacementY =targetLoc.y - LaunchRigidBody.position.y;
         Vector3 displacementXZ = new Vector3(targetLoc.x - LaunchRigidBody.position.x, 0, targetLoc.z - LaunchRigidBody.position.z);
         float time = Mathf.Sqrt(-2 * newHeight / gravity) + Mathf.Sqrt(2 * (displacementY - newHeight) / gravity);
@@ -252,6 +251,7 @@ public class LaunchPlayer : MonoBehaviour
     public float minDistance = 30, maxDistance = 60;
     public float spawnangle =70f;
     public float maxAllowedHeight = 200f;
+  
     public Vector3 generateRandomSpawnLocation()
     {
         if (globalTransform == null)
@@ -267,12 +267,25 @@ public class LaunchPlayer : MonoBehaviour
         Vector3 newRandomPoint;
         newRandomPoint = MyMath.getRandomDirectionVectorWithinRange(spawnangle, globalTransform);
         newRandomPoint =  transform.position + newRandomPoint * randomDis;
+
+      
         newRandomPoint.y = transform.position.y;
         newRandomPoint.y += Random.Range(minHeightForSpawn , maxHeightForSpawn);
         newRandomPoint.y = Mathf.Clamp(newRandomPoint.y,5, maxAllowedHeight);
+
+        
       
         return newRandomPoint;
         
+    }
+
+    bool checkIfXisGreater(Vector3 val)
+    {
+        if (Mathf.Abs(val.x) > Mathf.Abs(val.z))
+        {
+            return true;
+        }
+        return false;
     }
 
     // this function is used to spawn particle only

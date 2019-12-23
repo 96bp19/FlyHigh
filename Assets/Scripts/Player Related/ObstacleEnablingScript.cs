@@ -12,13 +12,22 @@ public class ObstacleEnablingScript : MonoBehaviour
 
     private void OnDisable()
     {
-      
-        GetComponent<BoxCollider>().enabled = false;
+
+        Collider[] col = GetComponents<Collider>();
+        foreach (var item in col)
+        {
+            item.enabled = false;
+        }
+
     }
 
     void EnableCollider()
     {
-        GetComponent<BoxCollider>().enabled = true;
+        Collider[] col = GetComponents<Collider>();
+        foreach (var item in col)
+        {
+            item.enabled = true;
+        }
     }
 }
 
