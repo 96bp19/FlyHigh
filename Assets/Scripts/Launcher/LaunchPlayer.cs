@@ -27,11 +27,6 @@ public class LaunchPlayer : MonoBehaviour
     
 
     List<GameObject> allpickableItems = new List<GameObject>();
-
-
-    public GameObject ImpactParticle;
-
-  
     public levelSpawnableItems[] objectToSpawnBasedOnLevel;
 
     
@@ -246,6 +241,8 @@ public class LaunchPlayer : MonoBehaviour
     }
 
 
+
+
     public float Randomgenerationrange =30;
     public float minHeightForSpawn= -20, maxHeightForSpawn=20;
     public float minDistance = 30, maxDistance = 60;
@@ -289,15 +286,17 @@ public class LaunchPlayer : MonoBehaviour
     }
 
     // this function is used to spawn particle only
+    
     public void OnLanded(GameObject player)
     {
-        PlayerController player_controller = player.GetComponent<PlayerController>();
+       
         if (player)
         {
-            ImpactParticle.transform.position = player.transform.position;
-            ImpactParticle.SetActive(true);
+            player.GetComponent<PlayerAnimationController>().OnPlayerLaunched();
+            
         }
     }
+
 
     Transform globalTransform;
     private void OnDrawGizmos()
