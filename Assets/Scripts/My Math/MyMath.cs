@@ -248,6 +248,8 @@ public static class MyMath
         return relativeTransform.TransformDirection(point).normalized;
 
     }
+
+   
     public static LaunchData CalculateLaunchData(Vector3 targetLoc, Rigidbody LaunchRigidBody,float height,float gravity)
     {
 
@@ -261,6 +263,25 @@ public static class MyMath
         return new LaunchData(velocityXZ + velocityY * -Mathf.Sign(gravity), time);
     }
 
+    public static float LimitAngleFrom_0_To360(float angle)
+    {
+        float decimalVal = getDecimalFromFloat(angle);
+        
+        angle = (int)angle % 360;
+        if (angle < 0)
+        {
+            angle = 360 - angle;
+        }
+
+        
+        return angle+decimalVal;
+    }
+
+    public static  float getDecimalFromFloat(float val)
+    {
+        return val - (int)val;
+    }
+
     public struct LaunchData
     {
         public readonly Vector3 initialVelocity;
@@ -272,6 +293,8 @@ public static class MyMath
         }
 
     }
+
+    
 
 
 }

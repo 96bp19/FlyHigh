@@ -5,15 +5,7 @@ using UnityEngine;
 public class Test_ : MonoBehaviour
 {
 
-    
-    public enum Transformval
-    {
-        transform_right,transformLeft, transform_up,transform_down,transform_forward,transform_back,vector_left,vector_right,vector_up,vector_down,vector_forward,vector_back
-    }
-
-
-    // Update is called once per frame
-    
+ 
 
     public float minDis=5, maxDis=10;
 
@@ -46,24 +38,59 @@ public class Test_ : MonoBehaviour
         }
     }
 
+
+    public int circularResolution;
+    public int radiusResolution=1;
+    public float currentAngle;
+
     private void OnDrawGizmos()
     {
-
+       
         maxDis = Mathf.Max(maxDis, minDis);
-        //         point_01 = new Vector3(Mathf.Cos(angle/2 * Mathf.Deg2Rad), 0, Mathf.Sin(angle/2 * Mathf.Deg2Rad));
-        //         point_01 = transform.TransformDirection(point_01);
-        //         point_02 = new Vector3(Mathf.Cos(-angle / 2 * Mathf.Deg2Rad), 0, Mathf.Sin(-angle / 2 * Mathf.Deg2Rad));
-        //         point_02 = transform.TransformDirection(point_02);
         MyMath.getDirectionVectorsFromAngle(angle, out point_01,out point_02, transform);
         Debug.DrawRay(transform.position, point_01 * maxDis, Color.blue);
         Debug.DrawRay(transform.position, point_02 * maxDis, Color.red);
-      
+
+
+
+        circularResolution = Mathf.Clamp(circularResolution, 4, 100);
+        radiusResolution = Mathf.Clamp(radiusResolution, 1, 100);
+        
+        float angleDistribution = 360 / circularResolution;
+        float radiusDistribution = maxDis / radiusResolution;
 
 
         
 
-        Gizmos.color = Color.red;
+        for (int i = 0; i < radiusResolution; i++)
+        {
+            for (int x = 0;x <=360 ; x += (int)angleDistribution)
+            {
+                Vector3 circlePoint = new Vector3(Mathf.Cos((x) * Mathf.Deg2Rad), 0f, Mathf.Sin((x) * Mathf.Deg2Rad))*radiusDistribution*i;
+                circlePoint += transform.position;
+
+                float actualAngle = MyMath.LimitAngleFrom_0_To360(transform.localEulerAngles.y) +x;
+                actualAngle = MyMath.LimitAngleFrom_0_To360(actualAngle);
+                                
+                if (MyMath.IsValueInsideRange(actualAngle,0,angle/2) || MyMath.IsValueInsideRange(actualAngle,360-angle/2,360))
+                {
+                 Gizmos.color = Color.blue;
+                Gizmos.DrawWireSphere(circlePoint, 0.3f);
+
+                }
+                else
+                {
+                    Gizmos.color = Color.red;
+                }
+            }
+
+        }
+      
+        
+
         Gizmos.DrawSphere(point, 2f);
+
+       
 
        
        
