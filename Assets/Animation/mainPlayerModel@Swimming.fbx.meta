@@ -1,17 +1,12 @@
 fileFormatVersion: 2
-guid: 8b220e40fbc828941830d62b23535454
+guid: 9b170e5d8a966e147b31604c0c4bf994
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
   - first:
       74: -203655887218126122
     second: mixamo.com
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: helmet_guy
-    second: {fileID: 2100000, guid: 13593fced66b4ad448d0fa736e065f02, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
@@ -75,8 +70,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips:
-  - 9b170e5d8a966e147b31604c0c4bf994
+  referencedClips: []
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
