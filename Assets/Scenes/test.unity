@@ -156,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDis: 5
   maxDis: 8.94
-  angle: 59
+  angle: 350
   target: {fileID: 1868370115}
   height: 1
 --- !u!65 &721462407

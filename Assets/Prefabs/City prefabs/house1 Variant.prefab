@@ -42,18 +42,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 40.309505, y: 8.651901, z: 40.30951}
   m_Center: {x: 0.37961388, y: 3.8461533, z: -0.29245758}
---- !u!114 &-6085290839909853202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2857351688979211209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0e46379361aa134fa88aea320d78b51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &4996204681285583059
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -67,6 +55,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 19.611906, y: 19.900696, z: 19.56217}
   m_Center: {x: -0.759573, y: 81.405136, z: -0.84388256}
+--- !u!114 &-6085290839909853202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2857351688979211209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e46379361aa134fa88aea320d78b51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6090756956643441344
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -138,6 +138,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 82b92a95e29de624e9ea917d5d6997d8,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 82b92a95e29de624e9ea917d5d6997d8,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 82b92a95e29de624e9ea917d5d6997d8,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: 82b92a95e29de624e9ea917d5d6997d8,
         type: 3}
