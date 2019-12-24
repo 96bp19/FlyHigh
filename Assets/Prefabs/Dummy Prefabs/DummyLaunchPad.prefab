@@ -63,7 +63,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LaunchRigidBody: {fileID: 0}
   previousLauncher: {fileID: 0}
-  height: 12
+  height: 50
   gravity: -10
   debugPath: 0
   launchPadPrefab: {fileID: 899640047990296999}
@@ -71,7 +71,6 @@ MonoBehaviour:
     type: 3}
   bonusLevelItemPrefab: {fileID: 6528036378111492941, guid: d3d9d094ac1d96c45ba971c84b6a24d6,
     type: 3}
-  ImpactParticle: {fileID: 5623631872220297483}
   objectToSpawnBasedOnLevel:
   - MaxLevelRange: 10
     itemToSpawn:
@@ -99,7 +98,6 @@ MonoBehaviour:
   maxDistance: 250
   spawnangle: 359
   maxAllowedHeight: 100
-  totalCheckAllowed: 1000
 --- !u!1 &9106048679268011431
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,6 +251,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8543217075533062887, guid: 98d3fe9aef9618443bc957cb7e62c4f1,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98d3fe9aef9618443bc957cb7e62c4f1, type: 3}
 --- !u!4 &6388514961635473256 stripped
@@ -342,6 +345,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5551014577142218206, guid: fdf1074960db64d439672551595e6cd3,
+        type: 3}
+      propertyPath: m_LODs.Array.data[0].screenRelativeHeight
+      value: 0.12682547
+      objectReference: {fileID: 0}
+    - target: {fileID: 5551014577142218206, guid: fdf1074960db64d439672551595e6cd3,
+        type: 3}
+      propertyPath: m_LODs.Array.data[1].screenRelativeHeight
+      value: 0.029530985
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdf1074960db64d439672551595e6cd3, type: 3}
@@ -440,12 +453,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7feadcedea1fa3a4ea0fe8bf0139fc65, type: 3}
---- !u!1 &5623631872220297483 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1378812266715644137, guid: 7feadcedea1fa3a4ea0fe8bf0139fc65,
-    type: 3}
-  m_PrefabInstance: {fileID: 6713073843802012130}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2125069282566807704 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4635438043022875002, guid: 7feadcedea1fa3a4ea0fe8bf0139fc65,
