@@ -27,7 +27,7 @@ public class Item_Affectable : MonoBehaviour
             GetComponent<Rigidbody>().isKinematic = false;
 
         }
-        InputHandler.EnableInput(true);
+        MobileInputHandler.EnableInput(true);
         anim.speed = 1;
         Invincible = false;
 
@@ -63,7 +63,7 @@ public class Item_Affectable : MonoBehaviour
         }
         rb.isKinematic = true;
         anim.speed = 0;
-        InputHandler.EnableInput(false);
+        MobileInputHandler.EnableInput(false);
         rb.isKinematic = false;
     }
 
@@ -75,7 +75,7 @@ public class Item_Affectable : MonoBehaviour
             return;
         }
         
-        InputHandler.EnableInput(false);
+        MobileInputHandler.EnableInput(false);
         onBombedListeners?.Invoke();
         LevelManager.Instance.OnPlayerDied();
       
@@ -89,7 +89,7 @@ public class Item_Affectable : MonoBehaviour
     {
         Time.timeScale = 1.2f;
         setInvincible(true);
-        InputHandler.EnableInput(true);
+        MobileInputHandler.EnableInput(true);
 
         System.Action functionToCall = () => ResetInvincibleState();
         MyMath.StopCalledFunction(this,functionRoutine);

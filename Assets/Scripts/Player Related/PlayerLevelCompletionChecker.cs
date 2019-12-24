@@ -25,7 +25,7 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
         {
             GetComponent<Rigidbody>().isKinematic = true;
         }
-        InputHandler.EnableInput(false);
+        MobileInputHandler.EnableInput(false);
 
     }
 
@@ -34,7 +34,7 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
 
         // do stuff when level fails
         UnSubscribeFromEvent();
-        InputHandler.EnableInput(false);
+        MobileInputHandler.EnableInput(false);
         
 
     }
