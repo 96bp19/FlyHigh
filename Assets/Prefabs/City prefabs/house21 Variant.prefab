@@ -84,6 +84,21 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Obstacle
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 9464b8afcdc9d414fb7698294103e34b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -8420889080090237051, guid: 9464b8afcdc9d414fb7698294103e34b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 183741340914743080, guid: 9464b8afcdc9d414fb7698294103e34b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 9464b8afcdc9d414fb7698294103e34b,
         type: 3}
       propertyPath: m_LocalPosition.x
