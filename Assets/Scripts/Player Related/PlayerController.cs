@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        GetInputs();
+      //  GetInputs();
         RotateAccordingToVeolocity();
 
 
@@ -50,12 +50,13 @@ public class PlayerController : MonoBehaviour
 
 
 
-        controllingPlayer = inputs.Horizontal_raw!= 0;
+      //  controllingPlayer = inputs.Horizontal_raw!= 0;
+        controllingPlayer = MobileInputHandler.inputValues.swipeX != 0;
         if (controllingPlayer)
         {
             Debug.Log("rotating player according to inputs");
            
-            playermesh.transform.Rotate(0, controlledRotationSpeed * inputs.Horizontal_raw* Time.deltaTime,-1* controlledRotationSpeed * inputs.Horizontal_raw * Time.deltaTime, Space.Self);
+            playermesh.transform.Rotate(0, controlledRotationSpeed * MobileInputHandler.inputValues.swipeX * Time.deltaTime,-1* controlledRotationSpeed * inputs.Horizontal_raw * Time.deltaTime, Space.Self);
             Vector3 clampedAngle = new Vector3(
                 playermesh.transform.localEulerAngles.x,
                 MyMath.ClampAngle(playermesh.localEulerAngles.y, -maxRotateAngle, maxRotateAngle),
@@ -77,14 +78,15 @@ public class PlayerController : MonoBehaviour
 
     private void GetInputs()
     {
-        InputHandler.GetInput(out inputs);
+      //  InputHandler.GetInput(out inputs);
 
     }
 
     public void MovePlayer()
     {
+        
          
-        Vector3 newMovePos = Vector3.right * moveSpeed*inputs.HorizontalInp * Time.deltaTime;
+        Vector3 newMovePos = Vector3.right * moveSpeed*MobileInputHandler.inputValues.swipeX * Time.deltaTime;
         Debug.DrawRay(transform.position, transform.right * 10* inputs.HorizontalInp, Color.blue);
         transform.Translate(newMovePos);
    
