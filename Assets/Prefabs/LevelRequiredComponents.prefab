@@ -803,7 +803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ac84a3b7eca0d418cd189fd4968690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxScreenTouchTime: 0.3
+  maxScreenTouchTime: 0
 --- !u!1 &4495412407297063914
 GameObject:
   m_ObjectHideFlags: 0

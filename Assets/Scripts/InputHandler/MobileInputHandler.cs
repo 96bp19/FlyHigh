@@ -61,11 +61,13 @@ public class MobileInputHandler : MonoBehaviour
 
             if (currentScreenTouchedTime > 0)
             {
+                Debug.Log("tapped");
                 OnScreenTapped();
                 return;
 
             }
             CalculateSwipeState();
+            inputValues.setInputValues(0, 0, false, false);
 
         }
         if (touchInitiated)
@@ -73,6 +75,7 @@ public class MobileInputHandler : MonoBehaviour
             Vector3 mousepos = Input.mousePosition;
             if (Vector2.Distance(mousepos, touchStartPos) > 50)
             {
+                Debug.Log("swiped");
                 currentScreenTouchedTime = 0;
             }
             currentScreenTouchedTime -= Time.deltaTime;
