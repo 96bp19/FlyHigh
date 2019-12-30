@@ -103,7 +103,7 @@ public class LevelManager : MonoBehaviour
             {
                 // old disabled obstacles are re enabled
                 item.SetActive(true);
-                Debug.Log("removed from list");
+               
             }
         }
         obstacles.Clear();
@@ -115,7 +115,7 @@ public class LevelManager : MonoBehaviour
         {
             objToAdd.SetActive(false);
             obstacles.Add(objToAdd);
-            Debug.Log("added to list");
+           
         }
     }
 

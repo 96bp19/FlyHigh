@@ -43,7 +43,7 @@ public class MobileInputHandler : MonoBehaviour
     {
         if (!InputEnabled)
         {
-            Debug.Log("Input disabled");
+         
             return;
         }
         if (Input.GetMouseButtonDown(0))
@@ -61,7 +61,7 @@ public class MobileInputHandler : MonoBehaviour
 
             if (currentScreenTouchedTime > 0)
             {
-                Debug.Log("tapped");
+               
                 OnScreenTapped();
                 return;
 
@@ -75,7 +75,7 @@ public class MobileInputHandler : MonoBehaviour
             Vector3 mousepos = Input.mousePosition;
             if (Vector2.Distance(mousepos, touchStartPos) > 50)
             {
-                Debug.Log("swiped");
+              
                 currentScreenTouchedTime = 0;
             }
             currentScreenTouchedTime -= Time.deltaTime;

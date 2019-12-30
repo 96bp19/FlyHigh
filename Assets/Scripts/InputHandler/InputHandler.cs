@@ -21,7 +21,7 @@ public class InputHandler : MonoBehaviour
     {
         if (!InputEnabled)
         {
-            Debug.Log("Input disabled");
+           
             return;
         }
 

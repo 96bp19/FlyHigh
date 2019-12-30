@@ -65,7 +65,7 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
         {
             if (!itemAffectable.IsPlayerInvincible())
             {
-                Debug.Log("collided with : " + collision.gameObject.name);
+               
                 // Invoke("CheckForCollisionObject", 0.01f);
                 if (collision.gameObject.GetComponent<Collider>().enabled)
                 {
@@ -85,7 +85,7 @@ public class PlayerLevelCompletionChecker : MonoBehaviour
     {
 //         if (lastCollidedObject != null && lastCollidedObject.activeInHierarchy)
 //         {
-            Debug.Log("mission fail invoked");
+           
             LevelManager.Instance.OnPlayerDied();
             GetComponent<RagdollController>().EnableRagdoll(true);
 

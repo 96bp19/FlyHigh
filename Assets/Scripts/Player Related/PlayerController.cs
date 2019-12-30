@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
         controllingPlayer = MobileInputHandler.inputValues.swipeX != 0;
         if (controllingPlayer)
         {
-            Debug.Log("rotating player according to inputs");
+            
            
             playermesh.transform.Rotate(0, controlledRotationSpeed * MobileInputHandler.inputValues.swipeX * Time.deltaTime,-1* controlledRotationSpeed * inputs.Horizontal_raw * Time.deltaTime, Space.Self);
             Vector3 clampedAngle = new Vector3(

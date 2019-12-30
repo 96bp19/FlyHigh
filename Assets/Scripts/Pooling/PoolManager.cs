@@ -45,7 +45,7 @@ public class PoolManager : MonoBehaviour
 
         if (!newPooledTypes.ContainsKey(key) || newPooledTypes[key] == null)
         {
-            Debug.Log("no object of given type found in the dictionary");
+           
             return null;
         }
         return newPooledTypes[key][0];
