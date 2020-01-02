@@ -14,6 +14,7 @@ public class BackgroundLevelRemover : MonoBehaviour
         if (other.CompareTag("Obstacle"))
         {
             LevelManager.AddObstaclesToList(other.gameObject);
+            other.gameObject.SetActive(false);
         }
     }
 }

@@ -16,7 +16,7 @@ public class ObstacleEnablingScript : MonoBehaviour
         Collider[] col = GetComponents<Collider>();
         foreach (var item in col)
         {
-            item.enabled = false;
+            item.isTrigger = true;
         }
 
     }
@@ -26,7 +26,7 @@ public class ObstacleEnablingScript : MonoBehaviour
         Collider[] col = GetComponents<Collider>();
         foreach (var item in col)
         {
-            item.enabled = true;
+            item.isTrigger = false;
         }
     }
 }
